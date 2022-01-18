@@ -1,2 +1,2 @@
 # React-Practice
-Study React
+學習React的紀錄
