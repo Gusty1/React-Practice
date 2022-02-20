@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX小練習</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/babel">
+        /*
+            JS表達式與語法的差別
+            1.表達式:用一個變數去接，有回傳值就是表達式，例如:
+                (1).a
+                (2).a+b
+                (3).demo(1) 即使是空也會回傳undefined
+                (4).arr.map()
+                (5).function test() {}
+            2.語法(代碼)，例如:
+                (1).if(){}
+                (1).for(){}
+                (1).switch(){case:xxx}
+        */
+        const data=['Angular','React','Vue'];
+        const VDOM = (
+            <div>
+                <h1>前端JS框架列表</h1>
+                <ul style={{listStyleType:'hiragana'}}>
+                    {
+                        data.map((item,index)=>{
+                            return <li key={index}>{item}</li>
+                        })
+                        //注意JSX沒有引號
+                        //影片說要寫唯一值key，但這版本可能比較新不用寫，SO以防萬一還是補一下
+                    }
+                </ul>
+            </div>
+        )
+        
+        ReactDOM.render(VDOM,document.getElementById('test'))
+
+        /*
+            自我警告
+            1.註解方式同JS
+            2.JSX主解只能用在標籤內，就平常放class、id的地方，標籤外匯被渲染出來
+        */
+    </script>
+</body>
+
+</html>
