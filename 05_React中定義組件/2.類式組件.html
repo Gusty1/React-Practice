@@ -5,33 +5,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>使用JSX創建虛擬DOM</title>
+  <title>2_類式組件</title>
 </head>
 
 <body>
   <div id="test"></div>
-  <div id="demo"></div>
 
   <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script type="text/babel">
-    const TDOM = document.getElementById('demo')
-    const VDOM = (
-      <h1 id="title">
-        <span>Hello React</span>
-      </h1>
-    )
-    ReactDOM.render(VDOM,document.getElementById('test'))
-    console.log('虛擬DOM'+VDOM)
-    console.log('真實DOM'+TDOM)
-    // console.log(typeof VDOM)
-    // console.log(VDOM instanceof Object)
-    // 關於虛擬DOM
-    // 1.本質是Object的類型對象(一般對象)
-    // 2.虛擬DOM比較輕，真實DOM比較重；因虛擬DOM是React內部在用，無須真實DOM上那麼多
-    // 3.虛擬DOM最終會被React轉化為真實DOM，呈現在頁面上
+    //1.創建類式組件
+    class MyComponent extends React.Component {
+      //render方法放在哪裡?-->MyComponent的原型對象上，供實例使用
+      //render的this是誰?-->MyComponent的實例對象
+      render(){
+        return <h2>我是用類式定義的組件(適用於複雜組件)</h2>
+      }
+    }
+    //2.渲染組件到頁面
+    ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+    /*
+      1.React會解析組件標籤，找到MyComponent組件
+      2.發現組件是使用類定義的，隨後new出該類的實例，並通過該實例調用到原型上的render方法
+      3.將render返回的虛擬DOM轉為真實DOM，呈現在頁面中
+    */
   </script>
 </body>
 

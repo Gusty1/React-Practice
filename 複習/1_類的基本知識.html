@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_類的基本知識</title>
+</head>
+
+<body>
+
+  <script type="text/javascript">
+    //創建一個person對象
+    class Person {
+      //構造器方法
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+      //一般方法
+      speak() {
+        //speak方法放在哪裡?-->類的原型對象上，供實例使用
+        //通過Person實例調用speak時，speak中的this就是Person實例
+        console.log(`我叫${this.name}，我的年齡是${this.age}`)
+      }
+    }
+
+    //創建person的實例對象
+    const p1 = new Person('Tom', 20)
+    const p2 = new Person('Gusty', 25)
+
+    // console.log(p1)
+    // console.log(p2)
+
+    // p1.speak()
+    // p2.speak()
+
+    //創建一個Student類，繼承Person類
+    class Student extends Person {
+      constructor(name, age, grade) {
+        //注意super一定要放在最前面
+        super(name, age)
+        this.grade = grade
+      }
+      speak() {
+        console.log(`我叫${this.name}，我的年齡是${this.age}，我讀${this.grade}`)
+      }
+      study() {
+        //study方法放在哪裡?-->類的原型對象上，供實例使用
+        //通過Student實例調用study時，study中的this就是Student實例
+        console.log('我很努力的學習')
+      }
+    }
+
+    const s1 = new Student('小王', 15, '國三')
+    console.log(s1)
+
+    s1.speak()
+    s1.study()
+
+    /*
+      總結:
+        1.類中的構造器不是必須的，要對實例進行一些初始化的操作，如添加指定屬性時才寫
+        2.如果A類繼承了B類，且A類中寫了構造器，那A類構造器中的super是必須要調用的
+        3.類中所定義的方法，都是放在了類的原型對象上，供實例去使用
+    */
+  </script>
+</body>
+
+</html>
