@@ -65,6 +65,17 @@
         2.如果A類繼承了B類，且A類中寫了構造器，那A類構造器中的super是必須要調用的
         3.類中所定義的方法，都是放在了類的原型對象上，供實例去使用
     */
+
+    class Car {
+      constructor(name, price) {
+        this.name = name;
+        this.price = price;
+      }
+      //類中可以直接寫賦值語句，給car的實例對象添加一個屬性，名為wheel，值為4
+      wheel = 4
+    }
+    const c1 = new Car('BMW', 200)
+    console.log(c1)
   </script>
 </body>
 
