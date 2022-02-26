@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>props的簡寫方式</title>
+</head>
+
+<body>
+  <div id="test"></div>
+  <div id="test1"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js" integrity="sha512-M1OTu9xD1JPdXo2cOeJI+Z/f8P6E/pqK9ug3G8PRNLw1caUePewEmpFYKSYh4LEz483qnyB/UTlgX1Q4VCEsKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    class Person extends React.Component {
+      //對標籤屬性進行類型、必要性的限制
+      static protoTypes={
+        //這版本設定好像都沒什麼用，也不會報錯
+        name:PropTypes.string.isRequired,//限制name必傳，且為字串
+        sex:PropTypes.string,//限制sex為字串
+        age:PropTypes.number,//限制age為數字
+        speak:PropTypes.func//限制speak為函數
+      }
+      //指定默認標籤屬性值
+      static defaultProps={
+        sex:"不男不女",//sex默認值為不男不女
+        age:99//age默認值為99
+      }
+
+      //初始化狀態
+      state={}
+
+      render() {
+        const{name ,age,sex} = this.props
+        return (
+          <ul>
+            <li>姓名: {name}</li>
+            <li>性別: {sex}</li>
+            <li>年齡: {age+1}</li>
+          </ul>
+        )
+      }
+    }
+
+    const person={name:'我我我',age:18,sex:'girl'}
+    ReactDOM.render(<Person name="小王" age={25} speak={speak}/>,document.getElementById('test'))
+    ReactDOM.render(<Person {...person} />,document.getElementById('test1'))
+
+    function speak(){
+      console.log('我說話了')
+    }
+  </script>
+</body>
+
+</html>
