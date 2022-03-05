@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+
+<body>
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    /*
+      1.初始化階段:由ReactDOM.render()觸發---初次渲染
+        1.constructor()
+        2.componentWillUnmount()
+        3.render()
+        4.componentDidMount() ==>常用，一般在這鉤子做一些初始化的事 例:開啟定時器、發請求...
+      2.更新階段:由組件內部this.setState()或父組件render觸發
+        1.shouldComponentUpdate()
+        2.componentWillUpdate()
+        3.render() ==>必須使用
+         4.componentDidUpdate()
+      3.卸載組件:由ReactDOM.ReactDOM.unmountComponentAtNode()觸發
+        1.componentWillUnmount() ==>常用，一般在這鉤子做一些收尾的事 例:關定時器、取消訂閱消息...
+    */
+
+    //創建組件
+    class Count extends React.Component {
+
+      //構造器
+      constructor(props){
+        console.log('constructor')
+        super(props);
+        //初始化狀態
+        this.state ={
+          count:0
+        }
+      }
+
+      //組件將要掛載我的鉤子
+      componentWillMount(){
+        console.log('componentWillMount')
+      }
+      
+      // 組件掛載完畢的鉤子
+      componentDidMount(){
+        console.log('componentDidMount')
+      }
+
+      // 組件即將卸載的鉤子
+      componentWillUnmount(){
+        console.log('componentWillUnmount')
+      }
+
+      //控制組件更新的"閥門"，一定要返回boolean
+      shouldComponentUpdate(){
+        console.log('shouldComponentUpdate')
+        return true;
+      }
+
+      // 組件將要更新的鉤子
+      componentWillUpdate(){
+        console.log('componentWillUpdate')
+      }
+
+      // 組件更新完畢的鉤子
+      componentDidUpdate(){
+        console.log('componentDidUpdate')
+      }
+
+      //加1按鈕的回調
+      add=()=>{
+        //獲取狀態
+        let {count} = this.state
+        count++
+        // 更新狀態
+        this.setState({count})
+      }
+
+      //卸載組件按鈕的回調
+      death = ()=>{
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+
+      // 強制更新按鈕的回調
+      force = ()=>{
+        this.forceUpdate()
+      }
+
+      render() {
+        console.log('render')
+        let {count} = this.state
+        return(
+          <div>
+            <h2>求當前和為{count}</h2>
+            <button onClick={this.add}>點我加1</button>
+            <button onClick={this.death}>卸載組件</button>
+            <button onClick={this.force}>不更改任何狀態中的數據並強制更新</button>
+          </div> 
+        )
+      }
+    }
+    
+    //父組件A
+    class A extends React.Component {
+      state={
+        carName:'BMW'
+      }
+
+      changeCar=()=>{
+        this.setState({carName:"Toyota"})
+      }
+
+      render() {
+        return(
+          <div>
+            <h2>我是A組件</h2>
+            <button onClick={this.changeCar}>換車</button>
+            <B carName={this.state.carName}/>
+          </div>
+        )
+      }
+    }
+
+    //子組件B
+    class B extends React.Component {
+
+      //組件將要接收新的props的鉤子
+      componentWillReceiveProps(){
+        console.log('componentWillReceiveProps')
+        console.log(this.props)
+      }
+
+      render() {
+        return(
+          <div>
+            <h2>我是B組件，我接受到的車是:{this.props.carName}</h2>
+          </div>
+        )
+      }
+    }
+
+    //渲染組件
+    ReactDOM.render(<A/>,document.getElementById('test'))
+  </script>
+</body>
+
+</html>
