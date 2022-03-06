@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3_props的簡寫方式 copy</title>
+  <title>2_對props進行限制</title>
 </head>
 
 <body>
@@ -19,38 +19,37 @@
 
   <script type="text/babel">
     class Person extends React.Component {
-      //對標籤屬性進行類型、必要性的限制
-      static protoTypes={
-        //這版本設定好像都沒什麼用，也不會報錯
-        name:PropTypes.string.isRequired,//限制name必傳，且為字串
-        sex:PropTypes.string,//限制sex為字串
-        age:PropTypes.number,//限制age為數字
-        speak:PropTypes.func//限制speak為函數
-      }
-      //指定默認標籤屬性值
-      static defaultProps={
-        sex:"不男不女",//sex默認值為不男不女
-        age:99//age默認值為99
-      }
-
-      //初始化狀態
-      state={}
-
       render() {
         const{name ,age,sex} = this.props
+        //props是唯讀屬性
+        //修改會報錯，下面是修改
+        // this.props.name="ABC"
         return (
           <ul>
             <li>姓名: {name}</li>
             <li>性別: {sex}</li>
-            <li>年齡: {age+1}</li>
+            <li>年齡: {age}</li>
           </ul>
         )
       }
     }
+    //對標籤屬性進行類型、必要性的限制
+    Person.protoTypes={
+      //這版本設定好像都沒什麼用，也不會報錯
+      name:PropTypes.string.isRequired,//限制name必傳，且為字串
+      sex:PropTypes.string,//限制sex為字串
+      age:PropTypes.number,//限制age為數字
+      speak:PropTypes.func//限制speak為函數
+    }
+    //指定默認標籤屬性值
+    Person.defaultProps={
+      sex:"不男不女",//sex默認值為不男不女
+      age:99//age默認值為99
+    }
 
     const person={name:'我我我',age:18,sex:'girl'}
-    ReactDOM.render(<Person name="小王" age={25} speak={speak}/>,document.getElementById('test'))
-    ReactDOM.render(<Person {...person} />,document.getElementById('test1'))
+    ReactDOM.render(<Person name="小王" age={25} sex="boy" speak={speak}/>,document.getElementById('test1'))
+    ReactDOM.render(<Person {...person} />,document.getElementById('test'))
 
     function speak(){
       console.log('我說話了')
