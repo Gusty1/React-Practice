@@ -1,2 +1,2 @@
-# React-Practice
-  學習React的紀錄。
+# 學習紀錄 Study Record
+  React:學習React的紀錄。
