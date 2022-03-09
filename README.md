@@ -1,2 +1,2 @@
-# Study Record
-  React: 學習React的紀錄。
+# Study_React
+  學習React的紀錄。
