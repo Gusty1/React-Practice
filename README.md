@@ -133,9 +133,6 @@
     &emsp;(2).HashRouter刷新後會導致路由state的丟失
   4.備註:HashRouter可以用於解決一些路徑錯誤相關的問題
 
-### 十四、
-  1.
-
   額外安裝的庫:\
   1.nanoid:用於產生uuid；import {nanoid} form 'nanoid'；使用:nanoid()\
   2.prop-types:限制prop的類型；import PropTypes from 'prop-types'\
