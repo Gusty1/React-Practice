@@ -3,6 +3,11 @@
 
 ****
 
+# axios
+### 學習axios
+
+****
+
 # React_staging
 ### React的開發工具和應用範例
   首先把這專案用yarn 或 npm開啟，然後要看練習項目把當前的src改名，把要看的資料夾改成src就好  
@@ -225,3 +230,23 @@
 ### 8.求和案例_react-redux最終版
   (1).所有變量名字要規範，盡量觸發對象的簡寫形式  
   (2).reducers文件夾中，編寫index.js專門用於匯總並暴露所有的reducer  
+
+  ****
+
+# React_extension
+### React的擴展知識
+
+### 1.setState更新狀態的2種方法  
+(1).setState(stateChange,[callback])---對象式的setState  
+&emsp;1.stateChange為狀態改變對象(該對象可以體現出狀態的更改)  
+&emsp;2.callback是可選的回調函數，他在狀態更新、頁面更新完畢後(render調用後)才被調用  
+(2).setState(updater,[callback])---函數式的setState  
+&emsp;1.updater為返回stateChange對象的函數  
+&emsp;2.updater可以接收到state和props
+&emsp;2.callback是可選的回調函數，他在狀態更新、頁面更新完畢後(render調用後)才被調用  
+總結:  
+&emsp;1.對象式的setState是函數式的setState簡寫方式  
+&emsp;2使用原則:  
+&emsp;&emsp;1.如果更新狀態不依賴於原狀態==>使用對象方式  
+&emsp;&emsp;2.如果更新狀態依賴於原狀態==>使用函數方式  
+&emsp;&emsp;3.如果需要在setState()執行後獲取最新狀態的數據，要在第2個callback函數中獲取  
