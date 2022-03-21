@@ -133,16 +133,8 @@
     &emsp;(2).HashRouter刷新後會導致路由state的丟失  
   4.備註:HashRouter可以用於解決一些路徑錯誤相關的問題  
 
-  額外安裝的庫:  
-  1.nanoid:用於產生uuid；import {nanoid} form 'nanoid'；使用:nanoid()  
-  2.prop-types:限制prop的類型；import PropTypes from 'prop-types'  
-  3.axios:ajax的東西；import axios from 'axios'  
-  4.pubsub-js:訂閱和消息發布； import PubSub from 'pubsub-js'  
-  5.react-router-dom:web用的路由組件；import { NavLink, Route,BrowserRouter,Switch,Redirect} from 'react-router-dom'  
-
   備註:  
   1.uuid可以裝uuid，但影片說uuid偏大，所以推薦nanoid  
   2.import潛規則:第3方的都往上，自己寫得靠下，css放最後  
   3.已經寫好的css在public創建一個css資料夾，在index.html引入  
   4.注意public的index.html有引入bootstrap，要看其他項目的時候注意一下  
-  5.query-string用於解析網址參數，腳手架已經安裝好了，import qs from 'query-string'  
