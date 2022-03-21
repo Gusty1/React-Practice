@@ -133,8 +133,95 @@
     &emsp;(2).HashRouter刷新後會導致路由state的丟失  
   4.備註:HashRouter可以用於解決一些路徑錯誤相關的問題  
 
+  額外安裝的庫:  
+  1.nanoid:用於產生uuid；import {nanoid} form 'nanoid'；使用:nanoid()  
+  2.prop-types:限制prop的類型；import PropTypes from 'prop-types'  
+  3.axios:ajax的東西；import axios from 'axios'  
+  4.pubsub-js:訂閱和消息發布； import PubSub from 'pubsub-js'  
+  5.react-router-dom:web用的路由組件；import { NavLink, Route,BrowserRouter,Switch,Redirect} from 'react-router-dom'  
+
   備註:  
   1.uuid可以裝uuid，但影片說uuid偏大，所以推薦nanoid  
   2.import潛規則:第3方的都往上，自己寫得靠下，css放最後  
   3.已經寫好的css在public創建一個css資料夾，在index.html引入  
   4.注意public的index.html有引入bootstrap，要看其他項目的時候注意一下  
+  5.query-string用於解析網址參數，腳手架已經安裝好了，import qs from 'query-string'  
+
+  ****
+
+# Redux
+
+### 1.求和案例_redux精簡版
+  (1).去除Count組件自身的狀態  
+  (2).src下建立:   
+    &emsp;-src  
+    &emsp;&emsp;-redux  
+    &emsp;&emsp;&emsp;-store.js  
+    &emsp;&emsp;&emsp;&emsp;-count_reducer.js  
+  (3).store.js:  
+    &emsp;1).引入redux中的createStore函數，創建一個store  
+    &emsp;2).createStore調用時要傳入一個為其服務的reducer  
+    &emsp;3).記得暴露store對象  
+  (4)).store.js:  
+    &emsp;1).reducer的本質是一個函數，接收: preState、action，返回加工後的狀態  
+    &emsp;2).reducer有兩個作用:初始化狀態，加工狀態  
+    &emsp;3).reducer被第一次調用時，是store自動觸發的  
+      &emsp;&emsp;傳遞的preState是undefined  
+      &emsp;&emsp;傳遞的action是:{type:'@@REDUX/INIT_a.2.b.4'}  
+  (5).在index.js中監測store中狀態的改變，一旦發生改變重新渲染&lt;App/&gt;  
+    &emsp; 備註:redux只負責狀態管理，至於狀態的改變驅動著頁面的展示，要靠我們自己寫  
+
+### 2.求和案例_redux完整版
+  新增文件:  
+  &emsp;1.count_action.js 專門用於創建action對象  
+  &emsp;2.constant.js 放置容易寫錯的type值  
+
+### 3.求和案例_redux異步action版
+  (1).明確: 延遲的動作不想要交給組件自身，想交給action  
+  (2).何時需要異步action: 想要對狀態進行操作，但是具體的數據靠異步任務返回  
+  (3).具體編碼:  
+  &emsp;1).npm install redux-thunk，並配置在store中  
+  &emsp;2).創建action的函數不再返回一般對象，而是一個函數，該函數中寫異步任務  
+  &emsp;3).異步任務有結果後，分發一個同步的action去真正操作數據  
+  (4).備註: 異步action不是必須要寫的，完全可以自己等待異步任務的結果了再去發同步action  
+
+### 4.求和案例_react-redux基本使用
+  (1).明確2個概念:  
+    &emsp;1).UI組件: 不能使用任何redux的api，只負責頁面的呈現、交互等  
+    &emsp;2).容器組件: 負責和redux通信，將結果交給UI組件   
+  (2).如何創建一個組件容器---靠react-redux的connect函數  
+    &emsp;connect(mapStateToProps, mapDispatchToProps)(UI組件)  
+    &emsp; &emsp;-mapStateToProps:映射狀態，返回值是一個對象  
+    &emsp; &emsp;-mapDispatchToProps:映射操作狀態的方法，返回值是一個對象  
+  (3).備註1: 容器組件的store是靠props傳進去的，而不是在容器組中直接引入  
+  (4).備註2: mapDispatchToProps也可以是一個對象{}  
+
+### 5.求和案例_react-redux優化
+  (1).容器組件和UI組件混成一個文件  
+  (2).無須自己給容器組件傳遞store，給&lt;App/&gt;包裹一個&lt;Provider store={store}&gt;即可  
+  (3).使用react-redux後不用再自己監測redux中狀態的改變了，容器組件可以自動完成這個工作  
+  (4).mapDispatchToProps也可以簡單地寫成一個對象  
+  (5).一個組件要和redux打交道要經過哪幾步  
+    &emsp;(1).定義好UI組件(不暴露)  
+    &emsp;(2).引入connect生成一個容器組件，並暴露，寫法如下  
+      &emsp;&emsp;connect(  
+      &emsp;&emsp;&emsp;state=>({key:value})//映射狀態  
+      &emsp;&emsp;&emsp;{key:xxxAction}//映射狀態操作方法  
+      &emsp;&emsp;)(UI組件)  
+    &emsp;(3).在UI組件中通過this.props.xxx讀取和操作狀態  
+
+### 6.求和案例_react-redux數據共享版
+  (1).定義一個Person組件，和Count組件通過redux共享數據  
+  (2).為Person組件編寫: redux、action，配置constant'常量  
+  (3).重點:Person的reducer和Count的Reducer要使用combineReducers進行合併，合併的狀態是一個對象  
+  (4).交給store的是總reducer，最後注意在組件中取出狀態的時候記得「取到位」  
+
+### 7.求和案例_react-redux開發者工具的使用
+  (1).npm add redux-devtools-extension  
+  (2).store商店進行配置  
+  &emsp;import { composeWithDevTools } from 'redux-devtools-extension'  
+  &emsp;export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk)))  
+
+### 8.求和案例_react-redux最終版
+  (1).所有變量名字要規範，盡量觸發對象的簡寫形式  
+  (2).reducers文件夾中，編寫index.js專門用於匯總並暴露所有的reducer  
