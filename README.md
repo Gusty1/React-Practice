@@ -239,7 +239,7 @@
 ### 1.setState更新狀態的2種方法  
 (1).setState(stateChange,[callback])---對象式的setState  
 &emsp;1.stateChange為狀態改變對象(該對象可以體現出狀態的更改)  
-&emsp;2.callback是可選的回調函數，他在狀態更新、頁面更新完畢後(render調用後)才被調用  
+&emsp;2.callback是可選的回調函數，他在狀態、頁面更新完畢後(render調用後)才被調用  
 (2).setState(updater,[callback])---函數式的setState  
 &emsp;1.updater為返回stateChange對象的函數  
 &emsp;2.updater可以接收到state和props  
