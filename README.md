@@ -47,7 +47,7 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 ```
 <Route path="/xxxxx" components={Demo}/>
 ```
-4.&lt;App/&gt;的最外側包裹了一個&lt;HashRouter&gt;或&lt;/HashRouter&gt;  
+4.&lt;App/&gt;的最外側包裹了一個&lt;BrowserRouter&gt;或&lt;HashRouter&gt;  
 
 ### 四、路由組件與一般組件
 1.寫法不同:  
