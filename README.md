@@ -104,7 +104,7 @@
 
 ### 十一、向路由組件傳遞參數
   1.params參數:  
-    &emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test/tom/18">詳情&lt;Link&gt;  
+    &emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test/tom/18"&gt;詳情&lt;Link&gt;  
     &emsp;註冊路由(聲明接收): &lt;Route path="/demo/test/:name/:age" component={Test}/&gt;  
     &emsp;接收參數:this.props.match.params  
   2.search參數:  
@@ -210,7 +210,7 @@
     &emsp;(1).定義好UI組件(不暴露)  
     &emsp;(2).引入connect生成一個容器組件，並暴露，寫法如下  
       &emsp;&emsp;connect(  
-      &emsp;&emsp;&emsp;state=>({key:value})//映射狀態  
+      &emsp;&emsp;&emsp;state=&gt;({key:value})//映射狀態  
       &emsp;&emsp;&emsp;{key:xxxAction}//映射狀態操作方法  
       &emsp;&emsp;)(UI組件)  
     &emsp;(3).在UI組件中通過this.props.xxx讀取和操作狀態  
@@ -231,7 +231,7 @@
   (1).所有變量名字要規範，盡量觸發對象的簡寫形式  
   (2).reducers文件夾中，編寫index.js專門用於匯總並暴露所有的reducer  
 
-  ****
+****
 
 # React_extension
 ### React的擴展知識
