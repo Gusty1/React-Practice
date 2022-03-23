@@ -20,8 +20,8 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 &emsp;--某個組件使用:放在其自身的state中  
 &emsp;--某些組件使用:放在他們共同的父組件state中(官方稱此操作為:狀態提升)  
 3.關於父子之間通信:  
-&emsp;1.「父組件」給「子組件」傳遞數據:通過props傳遞  
-&emsp;2.「子組件」給「父祖件」傳遞數據:要求父提前給子傳遞一個函數  
+&emsp;(1).「父組件」給「子組件」傳遞數據:通過props傳遞  
+&emsp;(2).「子組件」給「父祖件」傳遞數據:要求父提前給子傳遞一個函數  
 4.注意defaultChecked和checked的區別，類似的還有defaultValue和value  
 5.狀態在哪裡，操作的方法就在哪裡  
 
@@ -33,9 +33,9 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 &emsp;const {a:{b}} =obj //連續解構賦值  
 &emsp;const {a:{b:value}} //連續解構賦值+重命名  
 3.消息訂閱與發佈機制  
-&emsp;1.先訂閱，在發佈  
-&emsp;2.適用於任意組件通信  
-&emsp;3.要在組件的componentWillUnmount中取消訂閱  
+&emsp;(1).先訂閱，再發佈  
+&emsp;(2).適用於任意組件通信  
+&emsp;(3).要在組件的componentWillUnmount中取消訂閱  
 
 ### 三、路由的基本使用
 1.明確好介面中的導航區、展示區  
@@ -59,20 +59,22 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 3.接收到的prop不同:  
 &emsp;一般組件:組件標籤傳遞甚麼，就收到甚麼  
 &emsp;路由組件:接收到3個固定的屬性  
-&emsp;&emsp;history:  
-&emsp;&emsp;&emsp;go:function(n)  
-&emsp;&emsp;&emsp;goBack:function()  
-&emsp;&emsp;&emsp;goForward:function()  
-&emsp;&emsp;&emsp;push:function(path,state)  
-&emsp;&emsp;&emsp;replace:function(path,state)  
-&emsp;&emsp;location:  
-&emsp;&emsp;&emsp;pathname:""  
-&emsp;&emsp;&emsp;search:""  
-&emsp;&emsp;&emsp;state:{}  
-&emsp;&emsp;match:  
-&emsp;&emsp;&emsp;params:{}  
-&emsp;&emsp;&emsp;path:""  
-&emsp;&emsp;&emsp;url:""  
+```
+history:
+  go: function(n)
+  goBack: function()
+  goForward: function()
+  push: function(path,state)
+  replace: function(path,state)
+location:
+  pathname: ""
+  search: ""
+  state: {}
+match:
+   params: {}
+   path: ""
+   url: ""
+```
 
 ### 五、NavLink與封裝NavLink
 1.NavLink可以實現路由鏈接的高亮，通過activeClassName指定樣式名(預設是active)  
@@ -94,7 +96,7 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 3.嚴格匹配不要隨便開啟，需要再開，有時候開啟會導致無法繼續匹配二級路由  
 
 ### 九、Redirect的使用
-1.一班寫在所有路由註冊的最下方，當所有路由都無法匹配時，跳轉到Redirect指定的路由  
+1.一般寫在所有路由註冊的最下方，當所有路由都無法匹配時，跳轉到Redirect指定的路由  
 2.具體編碼:  
 ```
 <Switch>
@@ -112,25 +114,27 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 1.params參數:  
 &emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test/tom/18"&gt;詳情&lt;Link&gt;  
 &emsp;註冊路由(聲明接收): &lt;Route path="/demo/test/:name/:age" component={Test}/&gt;  
-&emsp;接收參數:this.props.match.params  
+&emsp;接收參數: this.props.match.params  
 2.search參數:  
 &emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test?name=tom&age= 18"&gt;詳情&l;/Link&gt;  
 &emsp;註冊路由(無須聲明，正常註冊即可): &lt;Route path="/demo/test" component={Test}/&gt;  
 &emsp;接收參數: this.props.location.search  
-&emsp;備註:獲取到的search是urlencoded編碼字符串，需要藉助query-string的解析  
+&emsp;備註: 獲取到的search是urlencoded編碼字符串，需要藉助query-string的解析  
 3.state參數:  
 &emsp;路由鏈接(攜帶參數): &lt;Link to={{pathname:'/demo/test',state:{name:'tom',age:18}}}&gt;詳情&lt;/Link&gt;  
 &emsp;註冊路由(無須聲明，正常註冊即可): &lt;Route path="/demo/test" component={Test}/&gt;  
 &emsp;接收參數: this.props.location.state  
-&emsp;備註:刷新也可以保留住參數  
+&emsp;備註: 刷新也可以保留住參數  
 
 ### 十二、編程式路由導航
 借助this.props.history對象上的API對操作路由跳轉、前進、後退  
-&emsp;-this.props.history.push()  
-&emsp;-this.props.history.replace()  
-&emsp;-this.props.history.goBack()  
-&emsp;-this.props.history.goForward()  
-&emsp;-this.props.history.go()  
+```
+this.props.history.push()
+this.props.history.replace()
+this.props.history.goBack()
+this.props.history.goForward()
+this.props.history.go()
+```
 
 ### 十三、BrowserRouter與HashRouter的區別
 1.底層原理不一樣:  
@@ -145,11 +149,11 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 4.備註:HashRouter可以用於解決一些路徑錯誤相關的問題  
 
 額外安裝的庫:  
-1.nanoid:用於產生uuid；import {nanoid} form 'nanoid'；使用:nanoid()  
-2.prop-types:限制prop的類型；import PropTypes from 'prop-types'  
-3.axios:ajax的東西；import axios from 'axios'  
-4.pubsub-js:訂閱和消息發布； import PubSub from 'pubsub-js'  
-5.react-router-dom:web用的路由組件；import { NavLink, Route,BrowserRouter,Switch,Redirect} from 'react-router-dom'  
+1.nanoid: 用於產生uuid；import {nanoid} form 'nanoid'；使用:nanoid()  
+2.prop-types: 限制prop的類型；import PropTypes from 'prop-types'  
+3.axios: ajax的東西；import axios from 'axios'  
+4.pubsub-js: 訂閱和消息發布； import PubSub from 'pubsub-js'  
+5.react-router-dom: web用的路由組件；import { NavLink, Route,BrowserRouter,Switch,Redirect} from 'react-router-dom'  
 
 備註:  
 1.uuid可以裝uuid，但影片說uuid偏大，所以推薦nanoid  
@@ -164,11 +168,13 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 
 ### 1.求和案例_redux精簡版
 (1).去除Count組件自身的狀態  
-(2).src下建立:   
-&emsp;-src  
-&emsp;&emsp;-redux  
-&emsp;&emsp;&emsp;-store.js  
-&emsp;&emsp;&emsp;&emsp;-count_reducer.js  
+(2).src下建立:
+```
+-src
+  -redux
+   -store.js
+    -count_reducer.js
+```
 (3).store.js:  
 &emsp;1).引入redux中的createStore函數，創建一個store  
 &emsp;2).createStore調用時要傳入一個為其服務的reducer  
@@ -177,8 +183,8 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 &emsp;1).reducer的本質是一個函數，接收: preState、action，返回加工後的狀態  
 &emsp;2).reducer有兩個作用:初始化狀態，加工狀態  
 &emsp;3).reducer被第一次調用時，是store自動觸發的  
-&emsp;&emsp;傳遞的preState是undefined  
-&emsp;&emsp;傳遞的action是:{type:'@@REDUX/INIT_a.2.b.4'}  
+&emsp;&emsp;傳遞的preState: undefined  
+&emsp;&emsp;傳遞的action: {type:'@@REDUX/INIT_a.2.b.4'}  
 (5).在index.js中監測store中狀態的改變，一旦發生改變重新渲染&lt;App/&gt;  
 &emsp; 備註:redux只負責狀態管理，至於狀態的改變驅動著頁面的展示，要靠我們自己寫  
 
@@ -200,7 +206,7 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 (1).明確2個概念:  
 &emsp;1).UI組件: 不能使用任何redux的api，只負責頁面的呈現、交互等  
 &emsp;2).容器組件: 負責和redux通信，將結果交給UI組件   
-(2).如何創建一個組件容器---靠react-redux的connect函數  
+(2).如何創建一個組件容器-->靠react-redux的connect函數  
 &emsp;connect(mapStateToProps, mapDispatchToProps)(UI組件)  
 &emsp; &emsp;-mapStateToProps:映射狀態，返回值是一個對象  
 &emsp; &emsp;-mapDispatchToProps:映射操作狀態的方法，返回值是一個對象  
@@ -217,8 +223,8 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 &emsp;(2).引入connect生成一個容器組件，並暴露，寫法如下  
 ```
 connect(
-   state=>({key:value}),//映射狀態
-   {key:xxxAction}//映射狀態操作方法
+  state=>({key:value}),//映射狀態
+  {key:xxxAction}//映射狀態操作方法
 )(UI組件)
 ```
 &emsp;(3).在UI組件中通過this.props.xxx讀取和操作狀態  
@@ -226,7 +232,7 @@ connect(
 ### 6.求和案例_react-redux數據共享版
 (1).定義一個Person組件，和Count組件通過redux共享數據  
 (2).為Person組件編寫: redux、action，配置constant'常量  
-(3).重點:Person的reducer和Count的Reducer要使用combineReducers進行合併，合併的狀態是一個對象  
+(3).重點: Person的reducer和Count的Reducer要使用combineReducers進行合併，合併的狀態是一個對象  
 (4).交給store的是總reducer，最後注意在組件中取出狀態的時候記得「取到位」  
 
 ### 7.求和案例_react-redux開發者工具的使用
@@ -257,9 +263,9 @@ export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk
 總結:  
 &emsp;1.對象式的setState是函數式的setState簡寫方式  
 &emsp;2使用原則:  
-&emsp;&emsp;1.如果更新狀態不依賴於原狀態==&gt;使用對象方式  
-&emsp;&emsp;2.如果更新狀態依賴於原狀態==&gt;使用函數方式  
-&emsp;&emsp;3.如果需要在setState()執行後獲取最新狀態的數據，要在第2個callback函數中獲取  
+&emsp;&emsp;(1).如果更新狀態不依賴於原狀態==&gt;使用對象方式  
+&emsp;&emsp;(2).如果更新狀態依賴於原狀態==&gt;使用函數方式  
+&emsp;&emsp;(3).如果需要在setState()執行後獲取最新狀態的數據，要在第2個callback函數中獲取  
 
 ### 6.組件優化
 1.component的2個問題:  
@@ -267,8 +273,7 @@ export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk
 &emsp;(2).當前組件重新render()就會自動重新render子組件==&gt;效率低  
 2.解決方法:  
 &emsp;(1).方法1: 重寫shouldComponentUpdate()方法，比較新舊state或props數據，如果有變化才返回true，沒有返回false  
-&emsp;(2).方法2: 使用PureComponent  
-&emsp;&emsp;PureComponent重寫了shouldComponentUpdate()，只有state或props數據有變化才返回true  
+&emsp;(2).方法2: 使用PureComponent，PureComponent重寫了shouldComponentUpdate()，只有state或props數據有變化才返回true  
 &emsp;&emsp;注意:  
 &emsp;&emsp;&emsp;只是進行state和props數據的比較，如果只是數據對象內部數據改變了，返回false  
 &emsp;&emsp;&emsp;不要直接修改state數據，?是要產生新數據  
@@ -285,7 +290,7 @@ export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk
 </A>
 ```
 &emsp;{this.props.children}  
-&emsp;**B組件不能得到A組件的數據**  
+&emsp;B組件不能得到A組件的數據  
 3.render props:  
 ```
 <A render={(data)=>{<C data={data}></C>}}</A>
