@@ -267,10 +267,102 @@ export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk
 &emsp;&emsp;(2).如果更新狀態依賴於原狀態==&gt;使用函數方式  
 &emsp;&emsp;(3).如果需要在setState()執行後獲取最新狀態的數據，要在第2個callback函數中獲取  
 
+### 2.路由組件的lazyLoad  
+1.通過React的lazy函數配合import()函數動態加載路由組件==>路由組件代碼會被分開打包
+```
+const Login = lazy(()=>import('/pages/...'))
+```
+2.通過&lt;Suspense&gt;指定在加載得到路由打包文件前顯示一個自定義Loading介面
+```
+<Suspense fallback={Loading}>
+  <Route path="/about" element={About} />
+  <Route path="/home" element={Home} />
+</Suspense>
+```
+
+### 3.Hooks 
+1.Hook/Hooks是甚麼?  
+&emsp;(1).Hook是React 16.8.0版新增的特性/語法  
+&emsp;(2).可以讓你在函數中使用state以及其他的React特性  
+2.三個常用的Hook  
+&emsp;(1).State Hook: React.useState()  
+&emsp;(2).Effect Hook: React.useEffect()  
+&emsp;(3).Ref Hook: React.useRef()  
+3.State Hook  
+&emsp;(1).State Hook讓函數也可以有state狀態，並進行狀態數據的讀寫操作   
+&emsp;(2).語法: const [xxx,setXxx] = React.useState(initValue)  
+&emsp;(3).useState()說明:  
+&emsp;&emsp;參數: 第一次初始化指定的值在內部做緩存  
+&emsp;&emsp;返回值: 包含2個元素的數組，第一個為內部當前狀態值，第2個為更新狀態值的函數  
+&emsp;(4).setXxx()2種寫法:  
+&emsp;&emsp;setXxx(newValue): 參數為非函數值，直接指定新的狀態值，內部用其覆蓋原來的狀態值  
+&emsp;&emsp;setXxx(value=> newValue): 參數為函數，接收原本的狀態值，返回新的狀態值，內部用其覆蓋原來的狀態值  
+4.EffectHook  
+&emsp;(1).Effect Hook 可以讓你在函數組件中執行副作用操作(用於模擬類組件中的生命週期鉤子)  
+&emsp;(2).React中的副作用操作:  
+&emsp;&emsp;發ajax請求  
+&emsp;&emsp;設置訂閱/啟動定時器  
+&emsp;&emsp;手動更改真實DOM  
+&emsp;(3).語法和說明:  
+```
+useEffect(()=>{
+  //在此可以執行任何副作用操作
+  return()=>{//在組件卸載前執行
+    //在此做一些收尾工作，例取消定時器、取消訂閱...
+  }
+},[stateValue])//如果指定的是[]，回調函數只會在第一次render()後執行
+```
+&emsp;(4).可以把useEffect Hook看做如下3個函數的組合:  
+&emsp;&emsp;componentDidMount()  
+&emsp;&emsp;componentDidUpdate()  
+&emsp;&emsp;componentWillUnmount()  
+5.RefHook  
+&emsp;(1).Ref Hook可以在函數組件中存储/查找組件內的標籤或任意其他的數據  
+&emsp;(2).語法: const refContainer = React.useRef()  
+&emsp;(3).作用: 保存標籤對象，功能與React.createRef()一致  
+
+### 4.Fragment
+1.使用:  
+```
+<Fragment>
+  <></>
+</Fragment>
+```
+2.作用: 可以不用必須有一個真實的DOM根標籤  
+
+### 5.Context
+1.理解: 一種組件間的通信方式，常用於「祖祖件」與「後代組件」間通信  
+2.使用:  
+&emsp;(1).創建Context容器對象  
+&emsp;&emsp;const XxxContext = React.createContext()  
+&emsp;(2).渲染子組件時，外面包裹xxxContext.Provider，通過value屬性給後代祖件傳遞數據:   
+```
+<xxxContext.Provider value={數據}>
+  子組件
+</xxxContext.Provider>  
+```
+&emsp;(3).後代祖件讀取數據:  
+&emsp;&emsp;第一種方式:僅適用於類組件  
+```
+static contextType = xxxContext//聲明接收context
+this.context//讀取context的value數據
+```
+&emsp;&emsp;第二種方式:函數、類組件都可以  
+```
+<xxxContext.Consumer>
+  {
+    value=>(//value就是context中的value數據
+      要顯示的內容
+    )
+  }
+</xxxContext.Consumer>
+```
+3.注意: 在應用開發中一般不用context，都用它封裝的react插件 
+
 ### 6.組件優化
 1.component的2個問題:  
 &emsp;(1).只要執行setState()即使不改變狀態數據，組件也會重新render  
-&emsp;(2).當前組件重新render()就會自動重新render子組件==&gt;效率低  
+&emsp;(2).當前組件重新render()就會自動重新render子組件，縱使子組件沒有用到任何父祖件的數據==&gt;效率低  
 2.解決方法:  
 &emsp;(1).方法1: 重寫shouldComponentUpdate()方法，比較新舊state或props數據，如果有變化才返回true，沒有返回false  
 &emsp;(2).方法2: 使用PureComponent，PureComponent重寫了shouldComponentUpdate()，只有state或props數據有變化才返回true  
@@ -282,7 +374,7 @@ export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk
 ### 7.render props  
 1.如何向組件內部動態傳入帶內容的結構(標籤)?  
 &emsp;(1).使用children props:通過組件標籤體傳入結構  
-&emsp;(2).使用render props:通過組件標籤屬性傳入結構，一般用render函數屬性  
+&emsp;(2).使用render props:通過組件標籤屬性傳入結構，而且可以攜帶數據，一般用render函數屬性  
 2.children props:  
 ```
 <A>
@@ -330,7 +422,7 @@ static getDerivedStateFromError(error){
 &emsp;(3).集中式管理:  
 &emsp;&emsp;redux、dva...  
 &emsp;(4).conText:  
-&emsp;&emsp;生產-消費模式  
+&emsp;&emsp;生產者-消費者模式  
 3.比較好的搭配方式:  
 &emsp;父子組件: props  
 &emsp;兄弟組件: 消息訂閱-發佈、集中式管理  
