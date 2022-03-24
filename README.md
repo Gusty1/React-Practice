@@ -427,3 +427,9 @@ static getDerivedStateFromError(error){
 &emsp;父子組件: props  
 &emsp;兄弟組件: 消息訂閱-發佈、集中式管理  
 &emsp;祖孫組件: 消息訂閱-發布、集中式管理、conText(用的較少)  
+
+
+****
+
+# React_router6
+### react-router-dom6版的一些新東西
