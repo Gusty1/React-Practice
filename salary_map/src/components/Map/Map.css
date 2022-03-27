@@ -1,0 +1,43 @@
+.counties-container {
+	width: 50vw;
+	height: 70vh;
+	cursor: grab;
+}
+
+.counties {
+	fill: skyblue;
+}
+
+.counties :hover {
+	fill: gold;
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.county-borders {
+	fill: none;
+	stroke: #fff;
+	stroke-width: 0.5px;
+}
+
+.active {
+	fill: purple;
+}
+
+.selectCounty {
+	background-color: brown;
+	margin: 2.5px 5px 2.5px 0px;
+	color: white;
+	padding: 3px;
+	border-radius: 5px;
+}
+
+.countyTooltip {
+	display: none;
+	position: fixed;
+	z-index: 10;
+	background-color: green;
+	color: white;
+	padding: 5px;
+	border-radius: 5px;
+}
