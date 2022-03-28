@@ -55,26 +55,6 @@ const instance = axios.create({
 		client_secret: '0QXQ9LlrdMi6s7K2qrlQXmhRHuhvikK3ecZUc9OpV4I='
 	}
 });
-// 設置一個請求攔截器
-instance.interceptors.request.use(
-	function(config) {
-		return config;
-	},
-	function(error) {
-		alert('能力不足，發生錯誤:' + error);
-		return Promise.reject(error);
-	}
-);
-// 設置一個響應攔截器
-instance.interceptors.response.use(
-	function(response) {
-		return response;
-	},
-	function(error) {
-		alert('能力不足，發生錯誤:' + error);
-		return Promise.reject(error);
-	}
-);
 
 //處理月平均薪資資料
 function getAvgOvertimePay(countyAry, selectJobType, date) {
@@ -171,7 +151,6 @@ export default function Chart(props) {
 	React.useEffect(
 		() => {
 			const { selectJobType, countyAry, selectDate, selectChartType } = props;
-			console.log(selectChartType)
 			if (
 				(preProps.selectChartType === 'Pie' && selectChartType !== 'Pie') ||
 				(preProps.selectChartType === 'Radar' && selectChartType !== 'Radar')
@@ -192,12 +171,10 @@ export default function Chart(props) {
 				setChartData((chartData) => {
 					return { ...chartData };
 				});
-				console.log('yy');
 				preProps = props;
 				return;
 			}
 			preProps = props;
-			console.log('tt');
 			let avgOvertimePayAry = getAvgOvertimePay(countyAry, selectJobType, selectDate);
 			let monthlyWorkTimeAry = monthlyWorkTimeAverage(countyAry, selectJobType, selectDate);
 			if (avgOvertimePayAry.length === 0 || monthlyWorkTimeAry.length === 0 || selectChartType.trim() === '')
@@ -323,7 +300,7 @@ export default function Chart(props) {
 					});
 				})
 				.catch((error) => {
-					if (!alert('發生致命錯誤:' + error)) {
+					if (!alert('發生致命錯誤: ' + error)) {
 						window.location.reload();
 					}
 				});
