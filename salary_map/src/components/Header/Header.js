@@ -11,6 +11,7 @@ export default function Header() {
 				<Paragraph ellipsis={{ rows: 2, expandable: true, symbol: 'more' }}>
 					說明: 左邊選地區(地圖可以縮放、拖動)，右邊設定，都選好後就會自動產生2個圖表，一個是平均薪資另一個是平均工時，
 					時間部份是當年選的時間以前，例:選2019/06就顯示2019/01~2019/06的資料。<br />
+					資料來源:&nbsp;
 					<a href="https://www.openapi.org.tw/#/" target="_blank" rel="noreferrer">
 						智慧城鄉
 					</a>，政府的資料，薪資部分極大部分資料都是0，怕各位認為我做的不好都顯示不出來所以先告訴各位有資料的設定: 「台北市、批發業、2020/01」；
