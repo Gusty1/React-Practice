@@ -20,13 +20,6 @@ export default function Header() {
 					備註: 雖然地圖上有全選按鈕但請盡量不要按它，假設選20多個縣市又選12月那就會每個縣市都要跑一次1~12月的資料，請求量非常大，
 					請求過多API會把我擋住，短時間內不能再發送請求了，總之就是不要選太多地區和太長的時間區；然後預設timeout是1分鐘，
 					正常應該不會超過1分鐘，可能我程式掛了或API掛了，就重新整理後再試試看，如果資料都是0圓餅圖不會顯示出來。
-					<a
-						href="https://gusty1.github.io/GustyLittleWorld/life/Detail.html?order=24"
-						target="_blank"
-						rel="noreferrer"
-					>
-						更多垃圾話
-					</a>
 				</Paragraph>
 			</pre>
 		</Typography>
