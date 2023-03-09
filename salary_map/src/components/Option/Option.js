@@ -53,7 +53,7 @@ export default function Options() {
 
 	//選擇職業類別
 	function changeJobTypeAry(value) {
-		if (optionObj.countyAry.length === 0) return;
+		// if (optionObj.countyAry.length === 0) return;
 		setOptionObj((optionObj) => {
 			optionObj.selectJobType = value;
 			return { ...optionObj };
@@ -62,7 +62,7 @@ export default function Options() {
 
 	//選擇時間
 	function changeSelectDate(current) {
-		if (optionObj.countyAry.length === 0) return;
+		// if (optionObj.countyAry.length === 0) return;
 		setOptionObj((optionObj) => {
 			optionObj.selectDate = current.format('YYYY-MM');
 			return { ...optionObj };
@@ -71,7 +71,7 @@ export default function Options() {
 
 	//選擇圖表類型
 	function changeChartType(event) {
-		if (optionObj.countyAry.length === 0) return;
+		// if (optionObj.countyAry.length === 0) return;
 		setOptionObj((optionObj) => {
 			optionObj.selectChartType = event.target.value;
 			return { ...optionObj };
