@@ -14,7 +14,7 @@ import './Map.css';
 */
 
 export default function Map() {
-	const [ countyObj, setCountyObj ] = React.useState({
+	const [countyObj, setCountyObj] = React.useState({
 		isLoading: true,
 		countyAry: []
 	});
@@ -24,59 +24,46 @@ export default function Map() {
 		() => {
 			//發地區佈消息給選項
 			PubSub.publish('countyAry', countyObj.countyAry);
-			let zoom = d3.zoom().scaleExtent([ 1, 10 ]).on('zoom', zoomed);
+			let zoom = d3.zoom().scaleExtent([1, 10]).on('zoom', zoomed);
 
 			function zoomed(event) {
-				d3
-					.select('svg')
-					.selectAll('path')
-					.attr(
-						'transform',
-						`translate(${event.transform.x},${event.transform.y}) scale(${event.transform.k})`
-					);
+				d3.select('svg').selectAll('path').attr(
+					'transform',
+					`translate(${event.transform.x},${event.transform.y}) scale(${event.transform.k})`
+				);
 			}
-			d3.json('https://gusty1.github.io/Database/salary_map/COUNTY_MOI_1090820.json').then(function(mapData) {
-				let projection = d3.geoMercator().center([ 122.8, 24.5 ]).scale(6000);
+			d3.json('https://gusty1.github.io/Database/salary_map/COUNTY_MOI_1090820.json').then(function (mapData) {
+				let projection = d3.geoMercator().center([122.8, 24.5]).scale(6000);
 				let path = d3.geoPath(projection);
 				let features = topojson.feature(mapData, mapData.objects['COUNTY_MOI_1090820']).features;
-				d3
-					.select('g.counties')
-					.selectAll('path')
-					.data(features)
-					.enter()
-					.append('path')
-					.attr('d', path)
-					.on('mouseenter', (event, d) => {
-						toolTipRef.current.style.display = 'block';
-						toolTipRef.current.style.left = event.pageX + 'px';
-						toolTipRef.current.style.top = event.pageY - 50 + 'px';
-						toolTipRef.current.innerHTML = d.properties.COUNTYNAME;
-					})
-					.on('mouseout', () => {
-						toolTipRef.current.style.display = 'none';
-					})
-					.on('click', (event, d) => {
-						if (d3.select(event.target).attr('class') !== 'active') {
-							d3.select(event.target).attr('class', 'active');
-							setCountyObj((countyObj) => {
+				d3.select('g.counties').selectAll('path').data(features).enter().append('path').attr('d', path).on('mouseenter', (event, d) => {
+					toolTipRef.current.style.display = 'block';
+					toolTipRef.current.style.left = event.pageX + 'px';
+					toolTipRef.current.style.top = event.pageY - 50 + 'px';
+					toolTipRef.current.innerHTML = d.properties.COUNTYNAME;
+				}).on('mouseout', () => {
+					toolTipRef.current.style.display = 'none';
+				}).on('click', (event, d) => {
+					if (d3.select(event.target).attr('class') !== 'active') {
+						d3.select(event.target).attr('class', 'active');
+						setCountyObj((countyObj) => {
+							d.properties.COUNTYNAME = d.properties.COUNTYNAME.replaceAll('臺', '台');
+							countyObj.countyAry = [...countyObj.countyAry, d.properties.COUNTYNAME];
+							return { ...countyObj };
+						});
+					} else {
+						d3.select(event.target).attr('class', '');
+						setCountyObj((countyObj) => {
+							countyObj.countyAry = countyObj.countyAry.filter((item) => {
 								d.properties.COUNTYNAME = d.properties.COUNTYNAME.replaceAll('臺', '台');
-								countyObj.countyAry = [ ...countyObj.countyAry, d.properties.COUNTYNAME ];
-								return { ...countyObj };
+								return item !== d.properties.COUNTYNAME;
 							});
-						} else {
-							d3.select(event.target).attr('class', '');
-							setCountyObj((countyObj) => {
-								countyObj.countyAry = countyObj.countyAry.filter((item) => {
-									d.properties.COUNTYNAME = d.properties.COUNTYNAME.replaceAll('臺', '台');
-									return item !== d.properties.COUNTYNAME;
-								});
-								return { ...countyObj };
-							});
-						}
-					});
+							return { ...countyObj };
+						});
+					}
+				});
 				d3.select('svg').call(zoom);
-				d3.select('path.county-borders').attr(
-					'd',
+				d3.select('path.county-borders').attr('d',
 					path(
 						topojson.mesh(mapData, mapData.objects['COUNTY_MOI_1090820'], (a, b) => {
 							return a !== b;
@@ -89,7 +76,7 @@ export default function Map() {
 				});
 			});
 		},
-		[ countyObj.countyAry ]
+		[countyObj.countyAry]
 	);
 
 	//全選地區
