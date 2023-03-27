@@ -1,20 +1,20 @@
 # React_Basic
-### React的基礎知識
+## React的基礎知識
 
 ****
 
 # axios
-### 學習axios
+## 學習axios
 
 ****
 
 # React_staging
-### React的開發工具和應用範例
+## React的開發工具和應用範例
 首先把這專案用yarn 或 npm開啟，然後要看練習項目把當前的src改名，把要看的資料夾改成src就好  
 原本第4章是講甚麼代理配置，但那很需要nodeJs和一堆神奇的東西，總之就是聽不懂~~~  
 github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄下來  
 
-### 一、todoList案例相關知識
+## 一、todoList案例相關知識
 1.拆分組件、實現靜態組件，注意:className、style的寫法  
 2.動態初始化列表，如何確定將數據放在哪個組件的state中?  
 &emsp;--某個組件使用:放在其自身的state中  
@@ -25,19 +25,21 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 4.注意defaultChecked和checked的區別，類似的還有defaultValue和value  
 5.狀態在哪裡，操作的方法就在哪裡  
 
-### 二、github搜尋案例相關知識
+## 二、github搜尋案例相關知識
 1.設計狀態時要考慮全面，例如帶有網路請求的組件，要考慮請求失敗怎麼辦  
 2.ES6小知識:解構賦值+重命名  
-&emsp;let obj ={a:{b:1}}  
-&emsp;const {a} = obj //傳統解構賦值  
-&emsp;const {a:{b}} =obj //連續解構賦值  
-&emsp;const {a:{b:value}} //連續解構賦值+重命名  
+```
+let obj ={a:{b:1}}  
+const {a} = obj //傳統解構賦值  
+const {a:{b}} =obj //連續解構賦值  
+const {a:{b:value}} //連續解構賦值+重命名  
+```
 3.消息訂閱與發佈機制  
 &emsp;(1).先訂閱，再發佈  
 &emsp;(2).適用於任意組件通信  
 &emsp;(3).要在組件的componentWillUnmount中取消訂閱  
 
-### 三、路由的基本使用
+## 三、路由的基本使用
 1.明確好介面中的導航區、展示區  
 2.導航區中的a標籤改為Link標籤  
 ```
@@ -49,7 +51,7 @@ github搜尋案例原本還有個fetch篇，但我就聽過而已，沒有記錄
 ```
 4.&lt;App/&gt;的最外側包裹了一個&lt;BrowserRouter&gt;或&lt;HashRouter&gt;  
 
-### 四、路由組件與一般組件
+## 四、路由組件與一般組件
 1.寫法不同:  
 &emsp;一般組件:&lt;Demo/&gt;  
 &emsp;路由組件:&lt;Route path="/demo" components={Demo}/&gt;  
@@ -76,26 +78,26 @@ match:
    url: ""
 ```
 
-### 五、NavLink與封裝NavLink
+## 五、NavLink與封裝NavLink
 1.NavLink可以實現路由鏈接的高亮，通過activeClassName指定樣式名(預設是active)  
 2.標籤體內容是一個特殊的標籤屬性  
 3.通過this.props.children可以獲取標籤體內容  
 
-### 六、Switch的使用
+## 六、Switch的使用
 1.通常情況下，path和component是一種對應的關係  
 2.Switch可以提高路由匹配效率(單一匹配)  
 
-### 七、解決多級路徑刷新頁面樣式丟失問題
+## 七、解決多級路徑刷新頁面樣式丟失問題
 1.public/index.html 中 引入樣式時不寫 ./ 改寫 / (常用)  
 2.public/index.html 中 引入樣式時不寫 ./ 改寫 %PUBLIC_URL% (常用)  
 3.使用HashRouter  
 
-### 八、解決多級路徑刷新頁面樣式丟失問題
+## 八、解決多級路徑刷新頁面樣式丟失問題
 1.默認使用的是模糊匹配(簡單記:「輸入的路徑」必須包含要「匹配的路徑」，且順序要一致)  
 2.開啟嚴格匹配: &lt;Route exact path="/demo" component={Demo} /&gt;  
 3.嚴格匹配不要隨便開啟，需要再開，有時候開啟會導致無法繼續匹配二級路由  
 
-### 九、Redirect的使用
+## 九、Redirect的使用
 1.一般寫在所有路由註冊的最下方，當所有路由都無法匹配時，跳轉到Redirect指定的路由  
 2.具體編碼:  
 ```
@@ -106,17 +108,17 @@ match:
 </Switch>  
 ```
 
-### 十、嵌套路由
+## 十、嵌套路由
 1.註冊子路由時要寫上父路由的path值  
 2.路由的匹配是按照註冊路由的順序進行  
 
-### 十一、向路由組件傳遞參數
+## 十一、向路由組件傳遞參數
 1.params參數:  
 &emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test/tom/18"&gt;詳情&lt;Link&gt;  
 &emsp;註冊路由(聲明接收): &lt;Route path="/demo/test/:name/:age" component={Test}/&gt;  
 &emsp;接收參數: this.props.match.params  
 2.search參數:  
-&emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test?name=tom&age= 18"&gt;詳情&l;/Link&gt;  
+&emsp;路由鏈接(攜帶參數): &lt;Link to="/demo/test?name=tom&age= 18"&gt;詳情l;/Link&gt;  
 &emsp;註冊路由(無須聲明，正常註冊即可): &lt;Route path="/demo/test" component={Test}/&gt;  
 &emsp;接收參數: this.props.location.search  
 &emsp;備註: 獲取到的search是urlencoded編碼字符串，需要藉助query-string的解析  
@@ -126,7 +128,7 @@ match:
 &emsp;接收參數: this.props.location.state  
 &emsp;備註: 刷新也可以保留住參數  
 
-### 十二、編程式路由導航
+## 十二、編程式路由導航
 借助this.props.history對象上的API對操作路由跳轉、前進、後退  
 ```
 this.props.history.push()
@@ -136,7 +138,7 @@ this.props.history.goForward()
 this.props.history.go()
 ```
 
-### 十三、BrowserRouter與HashRouter的區別
+## 十三、BrowserRouter與HashRouter的區別
 1.底層原理不一樣:  
 &emsp;BrowserRouter使用的是H5的history API，不兼容IE9級以下的版本  
 &emsp;HashRouter使用的是URL的哈希值  
@@ -166,7 +168,7 @@ this.props.history.go()
 
 # Redux
 
-### 1.求和案例_redux精簡版
+## 1.求和案例_redux精簡版
 (1).去除Count組件自身的狀態  
 (2).src下建立:
 ```
@@ -188,12 +190,12 @@ this.props.history.go()
 (5).在index.js中監測store中狀態的改變，一旦發生改變重新渲染&lt;App/&gt;  
 &emsp; 備註:redux只負責狀態管理，至於狀態的改變驅動著頁面的展示，要靠我們自己寫  
 
-### 2.求和案例_redux完整版
+## 2.求和案例_redux完整版
 新增文件:  
 &emsp;1.count_action.js 專門用於創建action對象  
 &emsp;2.constant.js 放置容易寫錯的type值  
 
-### 3.求和案例_redux異步action版
+## 3.求和案例_redux異步action版
 (1).明確: 延遲的動作不想要交給組件自身，想交給action  
 (2).何時需要異步action: 想要對狀態進行操作，但是具體的數據靠異步任務返回  
 (3).具體編碼:  
@@ -202,7 +204,7 @@ this.props.history.go()
 &emsp;3).異步任務有結果後，分發一個同步的action去真正操作數據  
 (4).備註: 異步action不是必須要寫的，完全可以自己等待異步任務的結果了再去發同步action  
 
-### 4.求和案例_react-redux基本使用
+## 4.求和案例_react-redux基本使用
 (1).明確2個概念:  
 &emsp;1).UI組件: 不能使用任何redux的api，只負責頁面的呈現、交互等  
 &emsp;2).容器組件: 負責和redux通信，將結果交給UI組件   
@@ -213,7 +215,7 @@ this.props.history.go()
 (3).備註1: 容器組件的store是靠props傳進去的，而不是在容器組中直接引入  
 (4).備註2: mapDispatchToProps也可以是一個對象{}  
 
-### 5.求和案例_react-redux優化
+## 5.求和案例_react-redux優化
 (1).容器組件和UI組件混成一個文件  
 (2).無須自己給容器組件傳遞store，給&lt;App/&gt;包裹一個&lt;Provider store={store}&gt;即可  
 (3).使用react-redux後不用再自己監測redux中狀態的改變了，容器組件可以自動完成這個工作  
@@ -229,13 +231,13 @@ connect(
 ```
 &emsp;(3).在UI組件中通過this.props.xxx讀取和操作狀態  
 
-### 6.求和案例_react-redux數據共享版
+## 6.求和案例_react-redux數據共享版
 (1).定義一個Person組件，和Count組件通過redux共享數據  
 (2).為Person組件編寫: redux、action，配置constant'常量  
 (3).重點: Person的reducer和Count的Reducer要使用combineReducers進行合併，合併的狀態是一個對象  
 (4).交給store的是總reducer，最後注意在組件中取出狀態的時候記得「取到位」  
 
-### 7.求和案例_react-redux開發者工具的使用
+## 7.求和案例_react-redux開發者工具的使用
 (1).npm add redux-devtools-extension  
 (2).store商店進行配置  
 ```
@@ -243,16 +245,16 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk)))
 ```
 
-### 8.求和案例_react-redux最終版
+## 8.求和案例_react-redux最終版
 (1).所有變量名字要規範，盡量觸發對象的簡寫形式  
 (2).reducers文件夾中，編寫index.js專門用於匯總並暴露所有的reducer  
 
 ****
 
 # React_extension
-### React的擴展知識
+## React的擴展知識
 
-### 1.setState更新狀態的2種方法  
+## 1.setState更新狀態的2種方法  
 (1).setState(stateChange,[callback])---對象式的setState  
 &emsp;1.stateChange為狀態改變對象(該對象可以體現出狀態的更改)  
 &emsp;2.callback是可選的回調函數，他在狀態、頁面更新完畢後(render調用後)才被調用  
@@ -267,7 +269,7 @@ export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk
 &emsp;&emsp;(2).如果更新狀態依賴於原狀態==&gt;使用函數方式  
 &emsp;&emsp;(3).如果需要在setState()執行後獲取最新狀態的數據，要在第2個callback函數中獲取  
 
-### 2.路由組件的lazyLoad  
+## 2.路由組件的lazyLoad  
 1.通過React的lazy函數配合import()函數動態加載路由組件==>路由組件代碼會被分開打包
 ```
 const Login = lazy(()=>import('/pages/...'))
@@ -280,7 +282,7 @@ const Login = lazy(()=>import('/pages/...'))
 </Suspense>
 ```
 
-### 3.Hooks 
+## 3.Hooks 
 1.Hook/Hooks是甚麼?  
 &emsp;(1).Hook是React 16.8.0版新增的特性/語法  
 &emsp;(2).可以讓你在函數中使用state以及其他的React特性  
@@ -321,7 +323,7 @@ useEffect(()=>{
 &emsp;(2).語法: const refContainer = React.useRef()  
 &emsp;(3).作用: 保存標籤對象，功能與React.createRef()一致  
 
-### 4.Fragment
+## 4.Fragment
 1.使用:  
 ```
 <Fragment>
@@ -330,7 +332,7 @@ useEffect(()=>{
 ```
 2.作用: 可以不用必須有一個真實的DOM根標籤  
 
-### 5.Context
+## 5.Context
 1.理解: 一種組件間的通信方式，常用於「祖祖件」與「後代組件」間通信  
 2.使用:  
 &emsp;(1).創建Context容器對象  
@@ -359,7 +361,7 @@ this.context//讀取context的value數據
 ```
 3.注意: 在應用開發中一般不用context，都用它封裝的react插件 
 
-### 6.組件優化
+## 6.組件優化
 1.component的2個問題:  
 &emsp;(1).只要執行setState()即使不改變狀態數據，組件也會重新render  
 &emsp;(2).當前組件重新render()就會自動重新render子組件，縱使子組件沒有用到任何父祖件的數據==&gt;效率低  
@@ -371,7 +373,7 @@ this.context//讀取context的value數據
 &emsp;&emsp;&emsp;不要直接修改state數據，?是要產生新數據  
 3.項目中一般使用PureComponent來優化  
   
-### 7.render props  
+## 7.render props  
 1.如何向組件內部動態傳入帶內容的結構(標籤)?  
 &emsp;(1).使用children props:通過組件標籤體傳入結構  
 &emsp;(2).使用render props:通過組件標籤屬性傳入結構，而且可以攜帶數據，一般用render函數屬性  
@@ -390,7 +392,7 @@ this.context//讀取context的value數據
 &emsp;A組件: {this.props.render(內部state數據)}  
 &emsp;C組件: 讀取A組件傳入的數據顯示{this.props.data}  
     
-### 8.錯誤邊界  
+## 8.錯誤邊界  
 1.理解: 錯誤邊界(Error boundary): 用來捕獲後代組件錯誤、渲染出備用頁面  
 2.特點: 只能捕獲後代組件生命週期發生的錯誤，不能捕獲自己組件產生的錯誤和其他組件在合成事件、定時器中產生的錯誤  
 3.使用方式: getDerivedStateFromError配合componentDidCatch  
@@ -408,7 +410,7 @@ static getDerivedStateFromError(error){
 }
 ```
     
-### 9.組件通信方式總節  
+## 9.組件通信方式總節  
 1.組件間的關係:  
 &emsp;父子組件  
 &emsp;兄弟組件(非嵌套組件)  
@@ -432,4 +434,4 @@ static getDerivedStateFromError(error){
 ****
 
 # React_router6
-### react-router-dom6版的一些新東西
+## react-router-dom6版的一些新東西
