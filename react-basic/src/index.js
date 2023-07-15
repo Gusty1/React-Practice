@@ -1,17 +1,18 @@
+//React: 框架的核心包
+//ReactDom: 專門做渲染相關的包
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+//應用的全局樣式文件
 import './index.css';
+//引入根組件
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
+//渲染根組件APP到一個id為root的dom節點上
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  //嚴格模式節點需要去掉
+  //useEffect的執行時機
+  // <React.StrictMode>
+  // </React.StrictMode>
+  <App />
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
