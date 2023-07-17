@@ -1,3 +1,1 @@
-# 學習React
-
-## REACT
+# 學習 React
