@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_函數式組件</title>
+</head>
+
+<body>
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    //1.創建函數式組件(代碼和資源的結合)
+    function MyComponent(){
+      console.log(this)//此處的this是undefined，因為babel編譯開啟了嚴格模式
+        return <h2>我是用函數定義的組件(適用於簡單組件)</h2>
+    }
+    //渲染組件到頁面，件名稱必須是大寫，小寫會去找html的元素標籤如果找不到會報錯。
+    ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+    /*
+      1.React會解析組件標籤，找到MyComponent組件
+      2.發現組件是使用函數定義的，隨後調愈該函數，將返回的虛擬DOM轉為真實DOM，最後呈現在頁面中
+    */
+  </script>
+</body>
+
+</html>

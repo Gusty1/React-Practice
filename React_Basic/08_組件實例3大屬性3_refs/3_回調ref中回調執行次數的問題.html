@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_回調ref中回調執行次數的問題</title>
+</head>
+
+<body>
+  <div>效果:點擊按鈕顯示左側輸入框的數據</div>
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    class Demo extends React.Component {
+
+      state={isHot:true}
+
+      showInfo=()=>{
+        const {input1} = this
+        alert(input1.value)
+      }
+
+      changeWeather=()=>{
+        const {isHot} =this.state
+        this.setState({isHot:!isHot})
+      }
+
+      saveInput=(c)=>{
+        this.input1 = c
+      }
+
+      render() {
+        const {isHot} = this.state
+        return(
+          <div>
+            <h2>今天天氣很{isHot?'炎熱':'涼爽'}</h2>
+            <button onClick={this.changeWeather}>點我切換天氣</button><br/>
+            {/*<input ref={(c)=>{this.input1 = c}} type="text" placeholder="輸入資料"/>*/}
+            <input ref={this.saveInput} type="text" placeholder="輸入資料"/>
+            <button onClick={this.showInfo} type="button">點我顯示</button>            
+          </div>
+        )
+      }
+    }
+    
+    ReactDOM.render(<Demo/>,document.getElementById('test'))
+  </script>
+</body>
+
+</html>

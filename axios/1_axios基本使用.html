@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axios基本使用</title>
+</head>
+
+<body>
+  <h1>axios基本使用</h1>
+  <button>GET</button>
+  <button>POST</button>
+  <button>PUT</button>
+  <button>DELETE</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const btns = document.querySelectorAll('button')
+
+    //獲取數據
+    btns[0].onclick = function () {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/posts'
+      }).then((response) => {
+        console.log(response)
+      })
+    }
+
+    //新增數據
+    btns[1].onclick = function () {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/posts',
+        data: {
+          title: '學習好累',
+          author: 'gusty'
+        }
+      }).then((response) => {
+        console.log(response)
+      })
+    }
+
+    //更新數據
+    btns[2].onclick = function () {
+      axios({
+        method: 'PUT',
+        url: 'http://localhost:3000/posts/2',
+        data: {
+          title: '學習好累',
+          author: 'bill'
+        }
+      }).then((response) => {
+        console.log(response)
+      })
+    }
+
+    //刪除數據
+    btns[3].onclick = function () {
+      axios({
+        method: 'DELETE',
+        url: 'http://localhost:3000/posts/2',
+      }).then((response) => {
+        console.log(response)
+      })
+    }
+  </script>
+</body>
+
+</html>

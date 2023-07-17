@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_state</title>
+</head>
+
+<body>
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    //點擊切換文字
+    //創建組件
+    class Weather extends React.Component {
+      //構造器調用幾次?-->1次
+      constructor(props){
+        super(props)
+        //讀取狀態
+        this.state={isHot:true}
+        //解決demo中this的指向問題
+        this.demo = this.demo.bind(this)
+      }
+
+      //render調用幾次?-->1+n次，1是初始化，n是更新次數
+      render(){
+        return <h1 onClick={this.demo}>今天天氣很{this.state.isHot?"炎熱":"涼爽"}</h1>
+      }
+      
+      // demo調用幾次?-->點幾次就調用幾次
+      demo(){
+        //study方法放在哪裡?-->類的原型對象上，供實例使用
+        //由於demo是作為onClick的回調，所以不是通過實例調用的，而是直接調用的
+        //類中的方法默認開啟了嚴格模式，所以demo中的this為undefined
+        
+        //嚴重注意:狀態必須透過setState進行更新，且更新是一種合併，不是替換
+        this.setState({isHot:!this.state.isHot})
+
+        //嚴重注意:狀態(state)不可以直接更改，下面就是直接更改
+        this.state.isHot = !this.state.isHot
+      }
+    }
+
+    //渲染組件到頁面
+    ReactDOM.render(<Weather/>,document.getElementById('test'))
+  </script>
+</body>
+
+</html>

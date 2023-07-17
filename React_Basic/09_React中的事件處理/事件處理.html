@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件處理</title>
+</head>
+
+<body>
+  <div>效果:點擊按鈕顯示左側輸入框的數據，右邊輸入框失焦自動提示</div>
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    class Demo extends React.Component {
+      /*
+        1.通過onXxx屬性指定事件處理函數(注意大小寫)
+          a.React使用的是自定義(合成)事件，而不是使用原生的DOM事件-->為了更好的兼容性
+          b.React中的事件是通過事件委託方式處理的(委託給組件外最外層的元素)-->為了高效
+        2.通過event.target得到發生事件的DOM元素對象-->不要過度使用ref
+      */
+
+      //創建ref容器
+      myRef = React.createRef()
+      myRef2 = React.createRef()
+
+      //展示左側輸入框的數據
+      showData=()=>{
+        alert(this.myRef.current.value)
+      }
+
+      //展示右側輸入框的數據
+      showData2=(event)=>{
+        alert(event.target.value)
+      }
+
+      //this一定要加
+      render(){
+        return(
+          <div>
+            <input ref={this.myRef} type="text" placeholder="點擊按鈕提示數據"/>
+            <button onClick={this.showData}>點我顯示左側資料</button>
+            <input onBlur={this.showData2} type="text" placeholder="失焦時自動提示數據" />
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Demo/>,document.getElementById('test'))
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axios其它使用方式</title>
+</head>
+
+<body>
+  <h1>axios其它使用方式</h1>
+  <button>GET</button>
+  <button>POST</button>
+  <button>PUT</button>
+  <button>DELETE</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const btns = document.querySelectorAll('button')
+
+    //發送GET請求
+    btns[0].onclick = function () {
+      axios.request({
+        method: 'get',
+        url: 'http://localhost:3000/comments'
+      }).then(response => {
+        console.log(response)
+      })
+    }
+
+    //發送POST請求
+    btns[1].onclick = function () {
+      axios.post(
+        'http://localhost:3000/comments', {
+          "body": "123456789",
+          "postId": 2
+        }
+      ).then(response => {
+        console.log(response)
+      })
+    }
+  </script>
+</body>
+
+</html>

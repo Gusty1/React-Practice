@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_引出生命週期</title>
+</head>
+
+<body>
+  <div>
+    效果:文字會漸漸變淡，最後消失時又變回最亮，一直重複這個循環<br>
+    按下不活了會把整個組件刪掉
+  </div>
+
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+
+    //生命週期回調函數<=>生命週期鉤子函數<=>生命週期函數<=>生命週期鉤子
+    class Life extends React.Component{
+
+      state={
+        opacity:1
+      }
+
+      death = ()=>{
+        //卸載組件
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+
+      // 組件掛載完畢時觸發
+      componentDidMount(){
+        this.timer= setInterval(()=>{
+          let {opacity} = this.state
+          opacity -=0.1
+          //JS小數加減時沒有那麼精準，所以<=0就變成1
+          if(opacity<=0){
+            opacity = 1
+          }
+          // {opacity:opacity} = {opacity}
+          this.setState({opacity})
+        },200)
+      }
+
+      //組件將要被卸載時觸發
+      componentWillUnmount(){
+        clearInterval(this.timer)
+      }
+
+      //初始化渲染、狀態更新之後
+      render() {
+        return (
+          <div>
+            <h2 style={{opacity:this.state.opacity}}>React學不會怎麼辦?</h2>
+            <button onClick={this.death}>不活了</button>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Life/>,document.getElementById('test'))
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSX與法規則</title>
+  <style>
+    .title {
+      background-color: brown;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="test"></div>
+
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha512-pBSlhNUvB+td6sjW1zmR6L7c7kVWR4octUPl4tfHmzO63424nxta8aLmficEcAAswQmRqTiToi63AazDurj/Sg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/babel">
+    const myId="Demo"
+    const myData="Hello React5555"
+    const VDOM = (
+      <div>
+        <h1 id={myId} className="title">
+          <span style={{color:'white',fontSize:'50px'}}>{myData}</span>
+        </h1>
+        <input type="text"/>
+      </div>
+      // <input type="text"> 會錯
+      // <good>213</good>
+    )
+    ReactDOM.render(VDOM,document.getElementById('test'))
+    /*
+    JSX與法規則
+    1.定義虛擬DOM不要引號
+    2.標籤中混入JS表達式時要用{}
+    3.樣式的類名指定不要用class，要用className
+    4.內連樣式要用style={{key:value}}的形式
+    5.只能有一個根標籤，只能有一個爸爸，有第2個會錯
+    6.標籤必須閉合
+    7.標籤首字母
+      (1)若小寫字母開頭，則將標籤轉為html中的同名元素，若html中無對應的同名元素則報錯
+      (2)若小寫字母開頭，react將去渲染對應的組件，若組件沒有定義則報錯
+    */
+  </script>
+</body>
+
+</html>
