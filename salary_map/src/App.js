@@ -1,15 +1,14 @@
-import React from 'react';
-import Header from './components/Header/Header.js';
-import { Layout, Row, Col, ConfigProvider } from 'antd';
-import PubSub from 'pubsub-js';
-import Map from './components/Map/Map.js';
-import Option from './components/Option/Option.js';
-import zhTW from 'antd/lib/locale/zh_TW';
-import { fadeIn, fadeInRight, fadeInLeft } from 'react-animations';
-import { StyleSheet, css } from 'aphrodite';
-import 'antd/dist/antd.min.css';
+import React from 'react'
+import Header from './components/Header/Header.js'
+import { Layout, Row, Col, ConfigProvider } from 'antd'
+import PubSub from 'pubsub-js'
+import Map from './components/Map/Map.js'
+import Option from './components/Option/Option.js'
+import zhTW from 'antd/lib/locale/zh_TW'
+import { fadeIn, fadeInRight, fadeInLeft } from 'react-animations'
+import { StyleSheet, css } from 'aphrodite'
 
-const { Content } = Layout;
+const { Content } = Layout
 
 const animateStyles = StyleSheet.create({
 	fadeIn: {
@@ -24,23 +23,23 @@ const animateStyles = StyleSheet.create({
 		animationName: fadeInLeft,
 		animationDuration: '1s'
 	}
-});
+})
 
-export default function App() {
-	const [ controlObj, setControlObj ] = React.useState({
+export default function App () {
+	const [controlObj, setControlObj] = React.useState({
 		controlMap: true
-	});
+	})
 
-	let controlMap = function(_, data) {
+	let controlMap = function (_, data) {
 		setControlObj((controlObj) => {
-			controlObj.controlMap = data;
-			return { ...controlObj };
-		});
-	};
+			controlObj.controlMap = data
+			return { ...controlObj }
+		})
+	}
 
 	React.useEffect(() => {
-		PubSub.subscribe('controlMap', controlMap);
-	}, []);
+		PubSub.subscribe('controlMap', controlMap)
+	}, [])
 
 	return (
 		<ConfigProvider locale={zhTW}>
@@ -63,5 +62,5 @@ export default function App() {
 				</Row>
 			</Content>
 		</ConfigProvider>
-	);
+	)
 }

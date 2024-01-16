@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import axios from 'axios';
-import { Spin, Row, Col, Result, Button } from 'antd';
-import { Line, Bar, Pie, Radar } from 'react-chartjs-2';
-import { ReloadOutlined } from '@ant-design/icons';
+import React, { Fragment } from 'react'
+import axios from 'axios'
+import { Spin, Row, Col, Result, Button } from 'antd'
+import { Line, Bar, Pie, Radar } from 'react-chartjs-2'
+import { ReloadOutlined } from '@ant-design/icons'
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -16,7 +16,7 @@ import {
 	Title,
 	Tooltip,
 	Legend
-} from 'chart.js';
+} from 'chart.js'
 import {
 	chartBackgroundColor,
 	chartBorderColor,
@@ -27,7 +27,7 @@ import {
 	timePieOptions,
 	payRadarOptions,
 	timeRadarOptions
-} from '../../constant.js';
+} from '../../constant.js'
 
 ChartJS.register(
 	CategoryScale,
@@ -41,9 +41,9 @@ ChartJS.register(
 	Tooltip,
 	Legend,
 	Filler
-);
+)
 
-let labels = [];
+let labels = []
 
 // 創建axios實例對象
 const instance = axios.create({
@@ -54,27 +54,27 @@ const instance = axios.create({
 		client_id: '587c2e80-8fc7-11ec-bcd3-2fe59eaf628f',
 		client_secret: '0QXQ9LlrdMi6s7K2qrlQXmhRHuhvikK3ecZUc9OpV4I='
 	}
-});
+})
 
 //處理月平均薪資資料
-function getAvgOvertimePay(countyAry, selectJobType, date) {
+function getAvgOvertimePay (countyAry, selectJobType, date) {
 	if (countyAry.length === 0 || selectJobType.toString().trim() === '' || date.trim() === '') return []
-	let newDateAry = [];
-	let newCountyAry = [];
-	labels = [];
+	let newDateAry = []
+	let newCountyAry = []
+	labels = []
 	for (let i = 1; i <= new Date(date).getMonth() * 1 + 1; i++) {
-		newDateAry.push(i);
-		labels.push(i + '月');
+		newDateAry.push(i)
+		labels.push(i + '月')
 	}
 	for (let county of countyAry) {
 		let countyId = taiwanCounty.findIndex((item) => {
-			return item === county;
-		});
-		if (countyId === -1) countyId = 20;
-		else countyId += 1;
-		newCountyAry.push(countyId);
+			return item === county
+		})
+		if (countyId === -1) countyId = 20
+		else countyId += 1
+		newCountyAry.push(countyId)
 	}
-	let queryAry = [];
+	let queryAry = []
 	for (let i = 0; i < newDateAry.length; i++) {
 		for (let j = 0; j < newCountyAry.length; j++) {
 			queryAry.push(
@@ -86,31 +86,31 @@ function getAvgOvertimePay(countyAry, selectJobType, date) {
 						indCatesID: selectJobType
 					}
 				})
-			);
+			)
 		}
 	}
-	return queryAry;
+	return queryAry
 }
 
 //處理月平均工時
-function monthlyWorkTimeAverage(countyAry, selectJobType, date) {
+function monthlyWorkTimeAverage (countyAry, selectJobType, date) {
 	if (countyAry.length === 0 || selectJobType.toString().trim() === '' || date.trim() === '') {
-		return [];
+		return []
 	}
-	let newDateAry = [];
-	let newCountyAry = [];
+	let newDateAry = []
+	let newCountyAry = []
 	for (let i = 1; i <= new Date(date).getMonth() * 1 + 1; i++) {
-		newDateAry.push(i);
+		newDateAry.push(i)
 	}
 	for (let county of countyAry) {
 		let countyId = taiwanCounty.findIndex((item) => {
-			return item === county;
-		});
-		if (countyId === -1) countyId = 20;
-		else countyId += 1;
-		newCountyAry.push(countyId);
+			return item === county
+		})
+		if (countyId === -1) countyId = 20
+		else countyId += 1
+		newCountyAry.push(countyId)
 	}
-	let queryAry = [];
+	let queryAry = []
 	for (let i = 0; i < newDateAry.length; i++) {
 		for (let j = 0; j < newCountyAry.length; j++) {
 			queryAry.push(
@@ -122,10 +122,10 @@ function monthlyWorkTimeAverage(countyAry, selectJobType, date) {
 						indCatesID: selectJobType
 					}
 				})
-			);
+			)
 		}
 	}
-	return queryAry;
+	return queryAry
 }
 
 /*
@@ -136,27 +136,27 @@ function monthlyWorkTimeAverage(countyAry, selectJobType, date) {
 	timeData: 平均工時的資料,
 */
 
-let preProps = {};
+let preProps = {}
 
-export default function Chart(props) {
+export default function Chart (props) {
 	const [chartData, setChartData] = React.useState({
 		isFirst: true,
 		isLoading: true,
 		payData: {},
 		timeData: {}
-	});
+	})
 
 	React.useEffect(
 		() => {
-			const { selectJobType, countyAry, selectDate, selectChartType } = props;
+			const { selectJobType, countyAry, selectDate, selectChartType } = props
 			if (
 				(preProps.selectChartType === 'Pie' && selectChartType !== 'Pie') ||
 				(preProps.selectChartType === 'Radar' && selectChartType !== 'Radar')
 			) {
 				setChartData((chartData) => {
-					return { ...chartData };
-				});
-				preProps = props;
+					return { ...chartData }
+				})
+				preProps = props
 			} else if (
 				preProps.selectJobType === props.selectJobType &&
 				JSON.stringify(preProps.countyAry) === JSON.stringify(props.countyAry) &&
@@ -167,34 +167,34 @@ export default function Chart(props) {
 				Object.keys(preProps).length > 0
 			) {
 				setChartData((chartData) => {
-					return { ...chartData };
-				});
-				preProps = props;
-				return;
+					return { ...chartData }
+				})
+				preProps = props
+				return
 			}
-			preProps = props;
-			let avgOvertimePayAry = getAvgOvertimePay(countyAry, selectJobType, selectDate);
-			let monthlyWorkTimeAry = monthlyWorkTimeAverage(countyAry, selectJobType, selectDate);
+			preProps = props
+			let avgOvertimePayAry = getAvgOvertimePay(countyAry, selectJobType, selectDate)
+			let monthlyWorkTimeAry = monthlyWorkTimeAverage(countyAry, selectJobType, selectDate)
 
 			if (avgOvertimePayAry.length === 0 || monthlyWorkTimeAry.length === 0 || selectChartType.trim() === '') return
 			setChartData((chartData) => {
-				chartData.isFirst = false;
-				chartData.isLoading = true;
-				return { ...chartData };
-			});
+				chartData.isFirst = false
+				chartData.isLoading = true
+				return { ...chartData }
+			})
 			Promise.all([...avgOvertimePayAry, ...monthlyWorkTimeAry]).then((results) => {
-				let payDatasets = [];
-				let timeDatasets = [];
-				let changeCountyAry = [];
+				let payDatasets = []
+				let timeDatasets = []
+				let changeCountyAry = []
 				let otherNum = countyAry.findIndex((item) => {
-					return item === '澎湖縣' || item === '金門縣' || item === '連江縣';
-				});
+					return item === '澎湖縣' || item === '金門縣' || item === '連江縣'
+				})
 				if (otherNum !== -1) {
-					countyAry.push('離島');
+					countyAry.push('離島')
 					changeCountyAry = countyAry.filter((item) => {
-						return item !== '澎湖縣' && item !== '金門縣' && item !== '連江縣';
-					});
-				} else changeCountyAry = [...countyAry];
+						return item !== '澎湖縣' && item !== '金門縣' && item !== '連江縣'
+					})
+				} else changeCountyAry = [...countyAry]
 				if (props.selectChartType === 'Pie') {
 					let payObj = {
 						label: '# of Votes',
@@ -202,39 +202,39 @@ export default function Chart(props) {
 						borderColor: [],
 						backgroundColor: [],
 						borderWidth: 1
-					};
+					}
 					let timeObj = {
 						label: '# of Votes',
 						data: [],
 						borderColor: [],
 						backgroundColor: [],
 						borderWidth: 1
-					};
+					}
 					for (let i = 0; i < changeCountyAry.length; i++) {
-						payObj.borderColor.push(chartBackgroundColor[i]);
-						payObj.backgroundColor.push(chartBorderColor[i]);
-						timeObj.borderColor.push(chartBackgroundColor[i]);
-						timeObj.backgroundColor.push(chartBorderColor[i]);
-						let paySum = 0;
-						let timeSum = 0;
+						payObj.borderColor.push(chartBackgroundColor[i])
+						payObj.backgroundColor.push(chartBorderColor[i])
+						timeObj.borderColor.push(chartBackgroundColor[i])
+						timeObj.backgroundColor.push(chartBorderColor[i])
+						let paySum = 0
+						let timeSum = 0
 						for (let result of results) {
 							if (
 								result.data.data[0].City === changeCountyAry[i] &&
 								result.data.data[0].Name === 'AvgOvertimePay'
 							) {
-								paySum += result.data.data[0].MonthlyPayAverage;
+								paySum += result.data.data[0].MonthlyPayAverage
 							} else if (
 								result.data.data[0].City === changeCountyAry[i] &&
 								result.data.data[0].Name === 'AvgWorktime'
 							) {
-								timeSum += result.data.data[0].MonthlyWorktimeAverage;
+								timeSum += result.data.data[0].MonthlyWorktimeAverage
 							}
 						}
-						payObj.data.push(paySum);
-						timeObj.data.push(timeSum);
+						payObj.data.push(paySum)
+						timeObj.data.push(timeSum)
 					}
-					payDatasets.push(payObj);
-					timeDatasets.push(timeObj);
+					payDatasets.push(payObj)
+					timeDatasets.push(timeObj)
 				} else {
 					for (let i = 0; i < changeCountyAry.length; i++) {
 						let payObj = {
@@ -243,29 +243,29 @@ export default function Chart(props) {
 							borderColor: props.selectChartType === 'Radar' ? chartBorderColor[i] : chartBackgroundColor[i],
 							backgroundColor: props.selectChartType === 'Radar' ? chartBackgroundColor[i] : chartBorderColor[i],
 							borderWidth: 1
-						};
+						}
 						let timeObj = {
 							label: changeCountyAry[i],
 							data: [],
 							borderColor: props.selectChartType === 'Radar' ? chartBorderColor[i] : chartBackgroundColor[i],
 							backgroundColor: props.selectChartType === 'Radar' ? chartBackgroundColor[i] : chartBorderColor[i],
 							borderWidth: 1
-						};
+						}
 						for (let result of results) {
 							if (
 								result.data.data[0].Name === 'AvgOvertimePay' &&
 								result.data.data[0].City === changeCountyAry[i]
 							) {
-								payObj.data.push(result.data.data[0].MonthlyPayAverage);
+								payObj.data.push(result.data.data[0].MonthlyPayAverage)
 							} else if (
 								result.data.data[0].Name === 'AvgWorktime' &&
 								result.data.data[0].City === changeCountyAry[i]
 							) {
-								timeObj.data.push(result.data.data[0].MonthlyWorktimeAverage);
+								timeObj.data.push(result.data.data[0].MonthlyWorktimeAverage)
 							}
 						}
-						payDatasets.push(payObj);
-						timeDatasets.push(timeObj);
+						payDatasets.push(payObj)
+						timeDatasets.push(timeObj)
 					}
 				}
 				setChartData((chartData) => {
@@ -273,36 +273,36 @@ export default function Chart(props) {
 						chartData.payData = {
 							labels: changeCountyAry,
 							datasets: payDatasets
-						};
+						}
 						chartData.timeData = {
 							labels: changeCountyAry,
 							datasets: timeDatasets
-						};
+						}
 					} else {
 						chartData.payData = {
 							labels,
 							datasets: payDatasets
-						};
+						}
 						chartData.timeData = {
 							labels,
 							datasets: timeDatasets
-						};
+						}
 					}
-					chartData.isLoading = false;
-					return { ...chartData };
-				});
+					chartData.isLoading = false
+					return { ...chartData }
+				})
 			}).catch((error) => {
 				if (!alert('發生致命錯誤: ' + error)) window.location.reload()
-			});
+			})
 		},
 		[props]
-	);
+	)
 
 	//出錯refresh button
-	function refreshPage() {
-		window.location.reload();
+	function refreshPage () {
+		window.location.reload()
 	}
-	
+
 	return (
 		<Fragment>
 			<Row style={{ width: '100%' }}>
@@ -363,5 +363,5 @@ export default function Chart(props) {
 				)}
 			</Row>
 		</Fragment>
-	);
+	)
 }
